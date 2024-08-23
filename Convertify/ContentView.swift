@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var temperatureInput = 0
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Temperature", value: $temperatureInput, format: .number)
+                        .keyboardType(.decimalPad)
+                }
+            }
         }
-        .padding()
     }
 }
 
