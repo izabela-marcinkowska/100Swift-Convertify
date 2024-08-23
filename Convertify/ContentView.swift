@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var temperatureInput: Double = 0
     @State private var chosenUnit: String = "C"
     @State private var requestedUnit: String = "C"
+    @FocusState private var inputIsFocused: Bool
     
     let units = ["C", "F", "K"]
     
@@ -38,6 +39,7 @@ struct ContentView: View {
                 Section ("Temperature") {
                     TextField("Temperature", value: $temperatureInput, format: .number)
                         .keyboardType(.decimalPad)
+                        .focused($inputIsFocused)
                     Picker("Unit", selection: $chosenUnit) {
                         ForEach(units, id: \.self) {
                             Text("\($0)°")
@@ -54,6 +56,13 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Convertify")
+            .toolbar {
+                if inputIsFocused {
+                    Button("Now") {
+                        inputIsFocused = false
+                    }
+                }
+            }
         }
     }
 }
