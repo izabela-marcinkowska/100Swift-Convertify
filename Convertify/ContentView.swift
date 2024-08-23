@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var temperatureInput = 0
+    @State private var temperatureInput: Double = 0
+    
+    var celciusToKelvin: Double {
+        let kelvinResult = temperatureInput + 273.15
+        return kelvinResult
+    }
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -16,7 +22,11 @@ struct ContentView: View {
                     TextField("Temperature", value: $temperatureInput, format: .number)
                         .keyboardType(.decimalPad)
                 }
+                Section {
+                    Text( celciusToKelvin, format: .number)
+                }
             }
+            .navigationTitle("Convertify")
         }
     }
 }
