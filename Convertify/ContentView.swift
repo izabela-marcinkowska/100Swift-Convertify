@@ -14,49 +14,19 @@ struct ContentView: View {
     
     let units = ["C", "F", "K"]
     
-    var celciusToKelvin: Double {
-        let kelvinResult = temperatureInput + 273.15
-        return kelvinResult
-    }
-    
-    var celciusToF: Double {
-        let FResult = (9/5 * temperatureInput) + 32
-        return FResult
-    }
-    
-    var kelvinToCelcius: Double {
-        let kelvinResult = temperatureInput - 273.15
-        return kelvinResult
-    }
-    
-    var kelvinToF: Double {
-        let FResult = (temperatureInput - 273.15) * 9/5 + 32
-        return FResult
-    }
-    
-    var FToCelcius: Double {
-        let celciusResult = (temperatureInput - 32) * 5/9
-        return celciusResult
-    }
-    
-    var FToKelvin: Double {
-        let kelvinResult = (temperatureInput - 32) * 5/9 + 273.15
-        return kelvinResult
-    }
-    
     var showResult: Double {
         if chosenUnit == "C" && requestedUnit == "K" {
-            return celciusToKelvin
+            return temperatureInput + 273.15
         } else if ( chosenUnit == "C" && requestedUnit == "F") {
-            return celciusToF
+            return (9/5 * temperatureInput) + 32
         } else if ( chosenUnit == "K" && requestedUnit == "C") {
-            return kelvinToCelcius
+            return temperatureInput - 273.15
         } else if ( chosenUnit == "K" && requestedUnit == "F") {
-            return kelvinToF
+            return (temperatureInput - 273.15) * 9/5 + 32
         } else if ( chosenUnit == "F" && requestedUnit == "C") {
-            return FToCelcius
+            return (temperatureInput - 32) * 5/9
         } else if ( chosenUnit == "F" && requestedUnit == "K") {
-            return FToKelvin
+            return (temperatureInput - 32) * 5/9 + 273.15
         } else {
             return temperatureInput
         }
@@ -68,17 +38,17 @@ struct ContentView: View {
                 Section ("Temperature") {
                     TextField("Temperature", value: $temperatureInput, format: .number)
                         .keyboardType(.decimalPad)
-                    Picker("Number of people", selection: $chosenUnit) {
+                    Picker("Unit", selection: $chosenUnit) {
                         ForEach(units, id: \.self) {
-                            Text("\($0)")
+                            Text("\($0)°")
                         }
                     }.pickerStyle(.segmented)
                 }
-                Section {
+                Section ("Converted temperature"){
                     Text( showResult, format: .number)
-                    Picker("Number of people", selection: $requestedUnit) {
+                    Picker("Unit", selection: $requestedUnit) {
                         ForEach(units, id: \.self) {
-                            Text("\($0)")
+                            Text("\($0)°")
                         }
                     }.pickerStyle(.segmented)
                 }
