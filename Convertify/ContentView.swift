@@ -9,13 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var temperatureInput: Double = 0
-    @State private var chosenUnit: Unit = Unit.C
-    @State private var requestedUnit: Unit = Unit.F
+    @State private var chosenUnit: String = ""
+    @State private var requestedUnit: String = ""
     
-    enum Unit {
-        case C, F, K
-    }
-    
+    let units = ["C", "F", "K"]
     
     var celciusToKelvin: Double {
         let kelvinResult = temperatureInput + 273.15
@@ -48,33 +45,42 @@ struct ContentView: View {
     }
     
     var showResult: Double {
-        if chosenUnit == Unit.C && requestedUnit == Unit.K {
+        if chosenUnit == "C" && requestedUnit == "K" {
             return celciusToKelvin
-        } else if ( chosenUnit == Unit.C && requestedUnit == Unit.F) {
+        } else if ( chosenUnit == "C" && requestedUnit == "F") {
             return celciusToF
-        } else if ( chosenUnit == Unit.K && requestedUnit == Unit.C) {
+        } else if ( chosenUnit == "K" && requestedUnit == "C") {
             return kelvinToCelcius
-        } else if ( chosenUnit == Unit.K && requestedUnit == Unit.F) {
+        } else if ( chosenUnit == "K" && requestedUnit == "F") {
             return kelvinToF
-        } else if ( chosenUnit == Unit.F && requestedUnit == Unit.C) {
+        } else if ( chosenUnit == "F" && requestedUnit == "C") {
             return FToCelcius
-        } else {
+        } else if ( chosenUnit == "F" && requestedUnit == "K") {
             return FToKelvin
+        } else {
+            return temperatureInput
         }
     }
     
     var body: some View {
         NavigationStack {
             Form {
-                Section {
+                Section ("Temperature") {
                     TextField("Temperature", value: $temperatureInput, format: .number)
                         .keyboardType(.decimalPad)
+                    Picker("Number of people", selection: $chosenUnit) {
+                        ForEach(units, id: \.self) {
+                            Text("\($0)")
+                        }
+                    }.pickerStyle(.segmented)
                 }
                 Section {
-                    Text( celciusToKelvin, format: .number)
-                }
-                Section {
-                    Text( celciusToF, format: .number)
+                    Text( showResult, format: .number)
+                    Picker("Number of people", selection: $requestedUnit) {
+                        ForEach(units, id: \.self) {
+                            Text("\($0)")
+                        }
+                    }.pickerStyle(.segmented)
                 }
             }
             .navigationTitle("Convertify")
