@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var temperatureInput: Double = 0
-    @State private var chosenUnit: String = ""
-    @State private var requestedUnit: String = ""
+    @State private var chosenUnit: String = "C"
+    @State private var requestedUnit: String = "C"
     
     let units = ["C", "F", "K"]
     
